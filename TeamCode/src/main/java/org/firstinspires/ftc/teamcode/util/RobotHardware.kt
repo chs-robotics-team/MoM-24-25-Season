@@ -44,13 +44,22 @@ class DriveTrain(private val hardware: RobotHardware) : MecanumDrive(
 }
 
 class Intake(private val hardware: RobotHardware) {
+    var SPEED = 0.1
     fun spin() {
         if (hardware.doSpinIntake.isDown) {
-            hardware.leftIntakeServo.set(1.0)
-            hardware.rightIntakeServo.set(1.0)
+            hardware.leftIntakeServo.set(SPEED)
+            hardware.rightIntakeServo.set(SPEED)
         } else {
             hardware.leftIntakeServo.set(0.0)
             hardware.rightIntakeServo.set(0.0)
+        }
+    }
+    fun cycleSpeed() {
+        logger.debug("Servo Intake Speed: $SPEED")
+        if (hardware.cycleSpeedButton.wasJustPressed()) {
+            if (SPEED == 1.0) {
+                SPEED = 0.1
+            } else SPEED += 0.1
         }
     }
 }
@@ -67,6 +76,7 @@ class RobotHardware(val hardwareMap: HardwareMap, val gamepad: GamepadEx) {
 
     val doSpinIntake = ButtonReader(gamepad, GamepadKeys.Button.RIGHT_BUMPER)
 
+    val cycleSpeedButton = ButtonReader(gamepad, GamepadKeys.Button.X)
     val toggleFast = ToggleButtonReader(gamepad, GamepadKeys.Button.RIGHT_STICK_BUTTON)
     val toggleHang = ToggleButtonReader(gamepad, GamepadKeys.Button.BACK)
 
