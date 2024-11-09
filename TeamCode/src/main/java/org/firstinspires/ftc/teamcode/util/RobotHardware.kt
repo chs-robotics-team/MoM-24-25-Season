@@ -45,7 +45,6 @@ class DriveTrain(private val hardware: RobotHardware) : MecanumDrive(
 
 class Intake(private val hardware: RobotHardware) {
     fun spin() {
-        logger.debug("Spin: ${hardware.doSpinIntake.isDown}")
         if (hardware.doSpinIntake.isDown) {
             hardware.leftIntakeServo.set(1.0)
             hardware.rightIntakeServo.set(-1.0)
