@@ -47,7 +47,7 @@ class Intake(private val hardware: RobotHardware) {
     fun spin() {
         if (hardware.doSpinIntake.isDown) {
             hardware.leftIntakeServo.set(1.0)
-            hardware.rightIntakeServo.set(-1.0)
+            hardware.rightIntakeServo.set(1.0)
         } else {
             hardware.leftIntakeServo.set(0.0)
             hardware.rightIntakeServo.set(0.0)
@@ -69,4 +69,9 @@ class RobotHardware(val hardwareMap: HardwareMap, val gamepad: GamepadEx) {
 
     val toggleFast = ToggleButtonReader(gamepad, GamepadKeys.Button.RIGHT_STICK_BUTTON)
     val toggleHang = ToggleButtonReader(gamepad, GamepadKeys.Button.BACK)
+
+    init {
+        leftIntakeServo.inverted = true
+    }
+
 }
