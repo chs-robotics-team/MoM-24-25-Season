@@ -54,14 +54,6 @@ class Intake(private val hardware: RobotHardware) {
             hardware.rightIntakeServo.set(0.0)
         }
     }
-    fun cycleSpeed() {
-        logger.debug("Servo Intake Speed: $SPEED")
-        if (hardware.cycleSpeedButton.wasJustPressed()) {
-            if (SPEED == 1.0) {
-                SPEED = 0.1
-            } else SPEED += 0.1
-        }
-    }
 }
 
 class RobotHardware(val hardwareMap: HardwareMap, val gamepad: GamepadEx) {
@@ -76,7 +68,6 @@ class RobotHardware(val hardwareMap: HardwareMap, val gamepad: GamepadEx) {
 
     val intakeSpinINButton = ButtonReader(gamepad, GamepadKeys.Button.RIGHT_BUMPER)
 
-    val cycleSpeedButton = ButtonReader(gamepad, GamepadKeys.Button.X)
     val toggleFast = ToggleButtonReader(gamepad, GamepadKeys.Button.RIGHT_STICK_BUTTON)
     val toggleHang = ToggleButtonReader(gamepad, GamepadKeys.Button.BACK)
 
