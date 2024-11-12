@@ -20,6 +20,11 @@ object Constants {
         const val LOW_SPEED = 0.4
         const val HIGH_SPEED = 0.8
     }
+
+    object IntakeServos {
+        const val SPEED = 1.0
+    }
+
 }
 
 class DriveTrain(private val hardware: RobotHardware) : MecanumDrive(
@@ -44,11 +49,10 @@ class DriveTrain(private val hardware: RobotHardware) : MecanumDrive(
 }
 
 class Intake(private val hardware: RobotHardware) {
-    var SPEED = 0.1
     fun spin() {
         if (hardware.intakeSpinINButton.isDown) {
-            hardware.leftIntakeServo.set(SPEED)
-            hardware.rightIntakeServo.set(SPEED)
+            hardware.leftIntakeServo.set(Constants.IntakeServos.SPEED)
+            hardware.rightIntakeServo.set(Constants.IntakeServos.SPEED)
         } else {
             hardware.leftIntakeServo.set(0.0)
             hardware.rightIntakeServo.set(0.0)
