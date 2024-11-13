@@ -77,6 +77,7 @@ class RobotHardware(val hardwareMap: HardwareMap, val gamepad: GamepadEx) {
 
     init {
         leftIntakeServo.inverted = true
+        frontLeftMotor.inverted = true
     }
 
 }
