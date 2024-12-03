@@ -28,6 +28,7 @@ class TeleOp : OpMode() {
 
     override fun loop() {
         hardware.driveTrain.drive()
+        hardware.intake.spin()
         gamepad.readButtons()
     }
 }
