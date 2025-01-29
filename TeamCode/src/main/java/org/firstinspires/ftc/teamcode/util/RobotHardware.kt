@@ -48,6 +48,18 @@ class DriveTrain(private val hardware: RobotHardware) : MecanumDrive(
     }
 }
 
+class VerticalSlide(private val hardware: RobotHardware) {
+    fun runSlide() {
+        if (hardware.slideUpButton.isDown) {
+            hardware.verticalArmSlideMotor.set(0.5)
+        } else if (hardware.slideDownButton.isDown) {
+            hardware.verticalArmSlideMotor.set(-0.5)
+        } else {
+            hardware.verticalArmSlideMotor.set(0.0)
+        }
+    }
+}
+
 class Intake(private val hardware: RobotHardware) {
     fun spin() {
         if (hardware.intakeSpinINButton.isDown) {
@@ -61,6 +73,7 @@ class Intake(private val hardware: RobotHardware) {
 }
 
 class RobotHardware(val hardwareMap: HardwareMap, val gamepad: GamepadEx) {
+    val verticalArmSlideMotor = Motor(hardwareMap, "vSlideMotor", Motor.GoBILDA.RPM_435)
     val leftIntakeServo = CRServo(hardwareMap, "lIntakeServo")
     val rightIntakeServo = CRServo(hardwareMap, "rIntakeServo")
     val frontLeftMotor = Motor(hardwareMap, "flMotor", Motor.GoBILDA.RPM_435)
@@ -69,11 +82,15 @@ class RobotHardware(val hardwareMap: HardwareMap, val gamepad: GamepadEx) {
     val backRightMotor = Motor(hardwareMap, "brMotor", Motor.GoBILDA.RPM_435)
     val driveTrain = DriveTrain(this)
     val intake = Intake(this);
+    val verticalArm = VerticalSlide(this)
 
     val intakeSpinINButton = ButtonReader(gamepad, GamepadKeys.Button.RIGHT_BUMPER)
 
     val toggleFast = ToggleButtonReader(gamepad, GamepadKeys.Button.RIGHT_STICK_BUTTON)
     val toggleHang = ToggleButtonReader(gamepad, GamepadKeys.Button.BACK)
+
+    val slideUpButton = ButtonReader(gamepad, GamepadKeys.Button.A)
+    val slideDownButton = ButtonReader(gamepad, GamepadKeys.Button.B)
 
     init {
         leftIntakeServo.inverted = true
